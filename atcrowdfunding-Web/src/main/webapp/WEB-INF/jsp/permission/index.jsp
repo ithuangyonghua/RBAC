@@ -179,37 +179,38 @@
 				//   <a><span></span></a>
 				var aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
 				aObj.attr("href", "javascript:;");
+				aObj.attr("target","");
 				if (treeNode.editNameFlag
 						|| $("#btnGroup" + treeNode.tId).length > 0)
 					return;
 				var s = '<span id="btnGroup'+treeNode.tId+'">';
 				if (treeNode.level == 0) {//根节点
-					s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" onclick="addPermission('
+					s += '<a class="btn btn-info dropdown-toggle btn-xs"  href="javascript:;" target="" style="margin-left:10px;padding-top:0px;" onclick="addPermission('
 							+ treeNode.id
-							+ ')" href="#" >&nbsp;&nbsp;<i   class="fa fa-fw fa-plus rbg "></i></a>';
+							+ ')">&nbsp;&nbsp;<i   class="fa fa-fw fa-plus rbg "></i></a>';
 				} else if (treeNode.level == 1) {//一级节点
-					s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  onclick="updatePermission('
+					s += '<a class="btn btn-info dropdown-toggle btn-xs"  href="javascript:;" target="" style="margin-left:10px;padding-top:0px;"  onclick="updatePermission('
 							+ treeNode.id
-							+ ')" href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+							+ ')" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
 					if (treeNode.children.length == 0) {
-						s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" onclick= "deleteePermission('
+						s += '<a class="btn btn-info dropdown-toggle btn-xs"  target=""  href="javascript:;" style="margin-left:10px;padding-top:0px;" onclick= "deleteePermission('
 								+ treeNode.id
 								+ ',\''
 								+ treeNode.name
-								+ '\')" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+								+ '\')" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
 					}
-					s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" onclick="addPermission('
+					s += '<a class="btn btn-info dropdown-toggle btn-xs"   href="javascript:;" target="" style="margin-left:10px;padding-top:0px;" onclick="addPermission('
 							+ treeNode.id
-							+ ')"   href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+							+ ')"   >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
 				} else if (treeNode.level == 2) {//
-					s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" onclick="updatePermission('
+					s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  target="" href="javascript:;" onclick="updatePermission('
 							+ treeNode.id
 							+ ')" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
-					s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" onclick= "deleteePermission('
+					s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" target="" href="javascript:;" onclick= "deleteePermission('
 							+ treeNode.id
 							+ ',\''
 							+ treeNode.name
-							+ '\')"href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+							+ '\')" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
 				}
 
 				s += '</span>';

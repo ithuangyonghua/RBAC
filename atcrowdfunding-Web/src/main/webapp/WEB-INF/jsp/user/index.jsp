@@ -282,7 +282,7 @@ table tbody td:nth-child(even) {
 		//内容加载
 		function pageQuery(pageno) {
 			var loadingIndex;
-			var jsonData= {"pageno" : pageno,"pagesize" : 5};
+			var jsonData= {"pageno" : pageno,"pagesize" : 2};
 			if(!likeflag){//说明有内容
 				jsonData.queryText = $("#queryText").val();
 			}
