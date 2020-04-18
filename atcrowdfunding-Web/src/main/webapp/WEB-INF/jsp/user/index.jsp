@@ -77,7 +77,7 @@ table tbody td:nth-child(even) {
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<div class="tree">
-					<ul style="padding-left: 0px;" class="list-group">
+					<%-- <ul style="padding-left: 0px;" class="list-group">
 						<li class="list-group-item tree-closed"><a href="main.html"><i
 								class="glyphicon glyphicon-dashboard"></i> 控制面板</a></li>
 						<li class="list-group-item"><span><i
@@ -89,7 +89,7 @@ table tbody td:nth-child(even) {
 										用户维护</a></li>
 								<li style="height: 30px;"><a href="${APP_PATH}/role/index"><i
 										class="glyphicon glyphicon-king"></i> 角色维护</a></li>
-								<li style="height: 30px;"><a href="permission.html"><i
+								<li style="height: 30px;"><a href="${APP_PATH}/permission/index"><i
 										class="glyphicon glyphicon-lock"></i> 许可维护</a></li>
 							</ul></li>
 						<li class="list-group-item tree-closed"><span><i
@@ -124,7 +124,8 @@ table tbody td:nth-child(even) {
 							</ul></li>
 						<li class="list-group-item tree-closed"><a href="param.html"><i
 								class="glyphicon glyphicon-list-alt"></i> 参数管理</a></li>
-					</ul>
+					</ul> --%>
+					<%@include file="/WEB-INF/jsp/common/menue.jsp" %>
 				</div>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

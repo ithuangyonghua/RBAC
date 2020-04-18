@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="UTF-8">
+<html lang="utf-8">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="${APP_PATH}/css/font-awesome.min.css">
 	<link rel="stylesheet" href="${APP_PATH}/css/main.css">
 	<link rel="stylesheet" href="${APP_PATH}/css/doc.min.css">
+	<link rel="stylesheet" href="${APP_PATH}/ztree/zTreeStyle.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -26,14 +27,14 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">众筹平台 - 用户维护</a></div>
+           <div><a class="navbar-brand" style="font-size:32px;" href="#">众筹平台 - 许可维护</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-user"></i> ${loginUser.username}  <span class="caret"></span>
+					<i class="glyphicon glyphicon-user"></i> ${loginUser.username}<span class="caret"></span>
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
@@ -60,7 +61,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<%-- <ul style="padding-left:0px;" class="list-group">
+				<ul style="padding-left:0px;" class="list-group">
 					<li class="list-group-item tree-closed" >
 						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
 					</li>
@@ -68,13 +69,13 @@
 						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span> 
 						<ul style="margin-top:10px;">
 							<li style="height:30px;">
-								<a href="${APP_PATH}/user/index" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
+								<a href="${APP_PATH}/user/index"><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="${APP_PATH}/role/index"><i class="glyphicon glyphicon-certificate"></i> 角色维护</a> 
+								<a href="${APP_PATH}/role/index"><i class="glyphicon glyphicon-king"></i> 角色维护</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="${APP_PATH}/permission/index"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
+								<a href="${APP_PATH}/permission/index" style="color:red;"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
 							</li>
 						</ul>
 					</li>
@@ -121,36 +122,15 @@
 					<li class="list-group-item tree-closed" >
 						<a href="param.html"><i class="glyphicon glyphicon-list-alt"></i> 参数管理</a> 
 					</li>
-				</ul> --%>
-				<%@include file="/WEB-INF/jsp/common/menue.jsp" %>
+				</ul>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<ol class="breadcrumb">
-				  <li><a href="#">首页</a></li>
-				  <li><a href="#">数据列表</a></li>
-				  <li class="active">新增</li>
-				</ol>
+
 			<div class="panel panel-default">
-              <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
+              <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> 权限菜单列表 <div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form">
-				  <div class="form-group">
-					<label for="exampleInputPassword1">名称</label>
-					<input type="text"  class="form-control" id="name" placeholder="请输入名称">
-				  </div>
-				  <!-- <div class="form-group">
-					<label for="exampleInputPassword1">用户名称</label>
-					<input type="text" class="form-control" id="username" placeholder="请输入用户名称">
-				  </div>
-				  <div class="form-group">
-					<label for="exampleInputEmail1">邮箱地址</label>
-					<input type="email" class="form-control" id="email" placeholder="请输入邮箱地址">
-					<p class="help-block label label-warning">请输入合法的邮箱地址, 格式为： xxxx@xxxx.com</p>
-				  </div> -->
-				  <button type="button" id="addBtn" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
-				</form>
+                  <ul id="treeDemo" class="ztree"></ul>
 			  </div>
 			</div>
         </div>
@@ -165,12 +145,12 @@
 		  </div>
 		  <div class="modal-body">
 			<div class="bs-callout bs-callout-info">
-				<h4>测试标题1</h4>
-				<p>测试内容1，测试内容1，测试内容1，测试内容1，测试内容1，测试内容1</p>
+				<h4>没有默认类</h4>
+				<p>警告框没有默认类，只有基类和修饰类。默认的灰色警告框并没有多少意义。所以您要使用一种有意义的警告类。目前提供了成功、消息、警告或危险。</p>
 			  </div>
 			<div class="bs-callout bs-callout-info">
-				<h4>测试标题2</h4>
-				<p>测试内容2，测试内容2，测试内容2，测试内容2，测试内容2，测试内容2</p>
+				<h4>没有默认类</h4>
+				<p>警告框没有默认类，只有基类和修饰类。默认的灰色警告框并没有多少意义。所以您要使用一种有意义的警告类。目前提供了成功、消息、警告或危险。</p>
 			  </div>
 		  </div>
 		  <!--
@@ -185,7 +165,7 @@
     <script src="${APP_PATH}/jquery/jquery-2.1.1.min.js"></script>
     <script src="${APP_PATH}/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${APP_PATH}/script/docs.min.js"></script>
-	<script src="${APP_PATH}/layer/layer.js"></script>
+	<script src="${APP_PATH}/ztree/jquery.ztree.all-3.5.min.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
@@ -198,38 +178,58 @@
 						}
 					}
 				});
-			    $("#addBtn").click(function(){
-			    	 var loadingIndex;
-			    	 var name = $("#name").val();
-			    	 if(name==""){
-			    		 layer.msg("角色的名称不能为空,请输入", {time:1000, icon:5, shift:6}, function(){
-			    			 //alert("回调方法");
-			    		 });
-			    		 return;
-			    	 }
-			    	 $.ajax({
-			    		 type:"POST",
-			    		 url:"${APP_PATH}/role/insert",
-			    		 data:{
-			    			 "name":name
-			    		 },
-			    		 beforeSend:function(){//代表发送数据前怎么怎么做
-			    			 loadingIndex = layer.msg('数据处理中', {icon: 16});
-			    		 },
-			    		 success:function(result){
-			    			 layer.close(loadingIndex);
-			    			 if(result.success){
-			    				 layer.msg("角色信息保存成功", {time:1000, icon:6, shift:6}, function(){
-			    					 window.location.href="${APP_PATH}/role/index"
-					    		 });
-			    			 }else{
-			    				 layer.msg("角色信息保存失败,请重新输入", {time:1000, icon:5, shift:6}, function(){
-					    			 //alert("回调方法");
-					    		 });
-			    			 }
-			    		 }
-			    	 });
-			    });
+				
+				var setting = {
+					view: {
+						selectedMulti: false,
+						addDiyDom: function(treeId, treeNode){
+							var icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
+							if ( treeNode.icon ) {
+								icoObj.removeClass("button ico_docu ico_open").addClass("fa fa-fw " + treeNode.icon).css("background","");
+							}
+                            
+						},
+						addHoverDom: function(treeId, treeNode){  
+                        //   <a><span></span></a>
+							var aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
+							aObj.attr("href", "javascript:;");
+							if (treeNode.editNameFlag || $("#btnGroup"+treeNode.tId).length>0) return;
+							var s = '<span id="btnGroup'+treeNode.tId+'">';
+							if ( treeNode.level == 0 ) {
+								s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+							} else if ( treeNode.level == 1 ) {
+								s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+								if (treeNode.children.length == 0) {
+									s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+								}
+								s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+							} else if ( treeNode.level == 2 ) {
+								s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+								s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+							}
+			
+							s += '</span>';
+							aObj.after(s);
+						},
+						removeHoverDom: function(treeId, treeNode){
+							$("#btnGroup"+treeNode.tId).remove();
+						}
+					},
+					async: {
+						enable: true,
+						url:"tree.txt",
+						autoParam:["id", "name=n", "level=lv"]
+					},
+					callback: {
+						onClick : function(event, treeId, json) {
+
+						}
+					}
+				};
+				//$.fn.zTree.init($("#treeDemo"), setting); //异步访问数据
+				
+				var d = [{"id":1,"pid":0,"seqno":0,"name":"系统权限菜单","url":null,"icon":"fa fa-sitemap","open":true,"checked":false,"children":[{"id":2,"pid":1,"seqno":0,"name":"控制面板","url":"dashboard.htm","icon":"fa fa-desktop","open":true,"checked":false,"children":[]},{"id":6,"pid":1,"seqno":1,"name":"消息管理","url":"message/index.htm","icon":"fa fa-weixin","open":true,"checked":false,"children":[]},{"id":7,"pid":1,"seqno":1,"name":"权限管理","url":"","icon":"fa fa-cogs","open":true,"checked":false,"children":[{"id":8,"pid":7,"seqno":1,"name":"用户管理","url":"user/index.htm","icon":"fa fa-user","open":true,"checked":false,"children":[]},{"id":9,"pid":7,"seqno":1,"name":"角色管理","url":"role/index.htm","icon":"fa fa-graduation-cap","open":true,"checked":false,"children":[]},{"id":10,"pid":7,"seqno":1,"name":"许可管理","url":"permission/index.htm","icon":"fa fa-check-square-o","open":true,"checked":false,"children":[]}]},{"id":11,"pid":1,"seqno":1,"name":"资质管理","url":"","icon":"fa fa-certificate","open":true,"checked":false,"children":[{"id":12,"pid":11,"seqno":1,"name":"分类管理","url":"cert/type.htm","icon":"fa fa-th-list","open":true,"checked":false,"children":[]},{"id":13,"pid":11,"seqno":1,"name":"资质管理","url":"cert/index.htm","icon":"fa fa-certificate","open":true,"checked":false,"children":[]}]},{"id":15,"pid":1,"seqno":1,"name":"流程管理","url":"process/index.htm","icon":"fa fa-random","open":true,"checked":false,"children":[]},{"id":16,"pid":1,"seqno":1,"name":"审核管理","url":"","icon":"fa fa-check-square","open":true,"checked":false,"children":[{"id":17,"pid":16,"seqno":1,"name":"实名认证人工审核","url":"process/cert.htm","icon":"fa fa-check-circle-o","open":true,"checked":false,"children":[]}]}]}];
+				$.fn.zTree.init($("#treeDemo"), setting, d);
             });
         </script>
   </body>

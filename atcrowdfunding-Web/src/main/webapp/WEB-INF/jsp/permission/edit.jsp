@@ -129,15 +129,19 @@
 				<ol class="breadcrumb">
 				  <li><a href="#">首页</a></li>
 				  <li><a href="#">数据列表</a></li>
-				  <li class="active">新增</li>
+				  <li class="active">修改</li>
 				</ol>
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form">
+				<form id="PermissionForm" >
 				  <div class="form-group">
-					<label for="exampleInputPassword1">名称</label>
-					<input type="text"  class="form-control" id="name" placeholder="请输入名称">
+					<label for="exampleInputPassword1">权限名称</label>
+					<input type="text"  class="form-control" id="name" value="${permissionInfo.name}" placeholder="请输入权限名称">
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputPassword1">链接地址</label>
+					<input type="text" class="form-control" id="url"  value="${permissionInfo.url}" placeholder="请输入链接地址">
 				  </div>
 				  <!-- <div class="form-group">
 					<label for="exampleInputPassword1">用户名称</label>
@@ -148,8 +152,8 @@
 					<input type="email" class="form-control" id="email" placeholder="请输入邮箱地址">
 					<p class="help-block label label-warning">请输入合法的邮箱地址, 格式为： xxxx@xxxx.com</p>
 				  </div> -->
-				  <button type="button" id="addBtn" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+				  <button type="button" id="addBtn" class="btn btn-success"><i class="glyphicon glyphicon-pencil"></i> 修改</button>
+				  <button type="button" id="resetBtn" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
 			  </div>
 			</div>
@@ -198,32 +202,43 @@
 						}
 					}
 				});
+			    $("#resetBtn").click(function(){
+			    	//$("#PermissionForm");
+			    	$("#PermissionForm")[0].reset();
+			    });
 			    $("#addBtn").click(function(){
 			    	 var loadingIndex;
 			    	 var name = $("#name").val();
 			    	 if(name==""){
-			    		 layer.msg("角色的名称不能为空,请输入", {time:1000, icon:5, shift:6}, function(){
-			    			 //alert("回调方法");
+			    		 layer.msg("权限名称不能为空,请输入", {time:1000, icon:5, shift:6}, function(){
+			    		 });
+			    		 return;
+			    	 }
+			    	 var url = $("#url").val();
+			    	 if(url==""){
+			    		 layer.msg("链接地址不能为空,请输入", {time:1000, icon:5, shift:6}, function(){
 			    		 });
 			    		 return;
 			    	 }
 			    	 $.ajax({
 			    		 type:"POST",
-			    		 url:"${APP_PATH}/role/insert",
+			    		 url:"${APP_PATH}/permission/update",
 			    		 data:{
-			    			 "name":name
+			    			 "name":name,
+			    			 "url":url,
+			    			 "id":"${permissionInfo.id}"
 			    		 },
 			    		 beforeSend:function(){//代表发送数据前怎么怎么做
 			    			 loadingIndex = layer.msg('数据处理中', {icon: 16});
 			    		 },
 			    		 success:function(result){
 			    			 layer.close(loadingIndex);
-			    			 if(result.success){
-			    				 layer.msg("角色信息保存成功", {time:1000, icon:6, shift:6}, function(){
-			    					 window.location.href="${APP_PATH}/role/index"
+			    			 if(result.success==true){
+			    				 layer.msg("权限信息修改成功", {time:1000, icon:6, shift:6}, function(){
+			    					 window.location.href="${APP_PATH}/permission/index"
 					    		 });
 			    			 }else{
-			    				 layer.msg("角色信息保存失败,请重新输入", {time:1000, icon:5, shift:6}, function(){
+			    				 layer.msg("权限信息修改失败,请重新输入", {time:1000, icon:5, shift:6}, function(){
 					    			 //alert("回调方法");
 					    		 });
 			    			 }

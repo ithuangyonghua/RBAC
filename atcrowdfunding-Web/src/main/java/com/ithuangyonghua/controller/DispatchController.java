@@ -1,18 +1,29 @@
 package com.ithuangyonghua.controller;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ithuangyonghua.bean.AjaxResult;
+import com.ithuangyonghua.bean.Permission;
 import com.ithuangyonghua.bean.User;
+import com.ithuangyonghua.service.PermissionService;
 import com.ithuangyonghua.service.UserService;
+
 /**
  * 登陆 && 退出
+ * 
  * @author Hyh
  *
  */
@@ -20,6 +31,19 @@ import com.ithuangyonghua.service.UserService;
 public class DispatchController {
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	PermissionService permissionService;
+
+	/**
+	 * 跳转到错误页面
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/error")
+	public String error() {
+		return "error";
+	}
 
 	/**
 	 * 跳转到登陆
@@ -76,12 +100,37 @@ public class DispatchController {
 	 */
 	@ResponseBody
 	@RequestMapping("/doAjaxLogin")
-	public Object doAjaxLogin(User user,HttpSession session) {
+	public Object doAjaxLogin(User user, HttpSession session) {
 		AjaxResult ajaxResult = new AjaxResult();
 		User dbuser = userService.queryForLogin(user);
 		if (dbuser != null) {
 			// 登陆成功,跳转到主页面
 			ajaxResult.setSuccess(true);
+		
+			// 封装用户与权限关系
+
+			List<Permission> permissions = permissionService.queryPermissionByUser(dbuser);// 查询登陆用户具有的许可
+			Set<String> autoUrlSet = new HashSet<String>();
+
+			Map<Integer, Permission> permissionMap = new HashMap<Integer, Permission>();//
+			Permission root = null;//
+			for (Permission permission : permissions) {
+				if (!StringUtils.isEmpty(permission.getUrl()) && !"".equals(permission.getUrl())) {
+					autoUrlSet.add(session.getServletContext().getContextPath() + permission.getUrl());
+				}
+				permissionMap.put(permission.getId(), permission);
+			}
+			for (Permission permission : permissions) {
+				Permission children = permission;
+				if (permission.getPid() == 0) {
+					root = children;
+				} else {
+					Permission parent = permissionMap.get(children.getPid());
+					parent.getChildren().add(children);
+				}
+			}
+			session.setAttribute("rootPermission", root);
+			session.setAttribute("autoUrlSet", autoUrlSet);
 			session.setAttribute("loginUser", dbuser);
 			return ajaxResult;// 默认是转发的方式
 		} else {
@@ -92,16 +141,18 @@ public class DispatchController {
 			return ajaxResult;
 		}
 	}
+
 	/**
 	 * 退出系统
+	 * 
 	 * @param session
 	 * @return
 	 */
 	@RequestMapping("/logout")
-	public String Logout(HttpSession session){
-//		session.removeAttribute("loginUser");
+	public String Logout(HttpSession session) {
+		// session.removeAttribute("loginUser");
 		session.invalidate();
-		return "redirect:login";//重定向到登录页面就是浏览器路径也会变成login
+		return "redirect:login";// 重定向到登录页面就是浏览器路径也会变成login
 	}
 
 }

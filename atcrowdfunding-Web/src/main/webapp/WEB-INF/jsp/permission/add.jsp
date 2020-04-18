@@ -136,8 +136,12 @@
 			  <div class="panel-body">
 				<form role="form">
 				  <div class="form-group">
-					<label for="exampleInputPassword1">名称</label>
-					<input type="text"  class="form-control" id="name" placeholder="请输入名称">
+					<label for="exampleInputPassword1">权限名称</label>
+					<input type="text"  class="form-control" id="name" placeholder="请输入权限名称">
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputPassword1">链接地址</label>
+					<input type="text" class="form-control" id="url" placeholder="请输入链接地址">
 				  </div>
 				  <!-- <div class="form-group">
 					<label for="exampleInputPassword1">用户名称</label>
@@ -202,28 +206,36 @@
 			    	 var loadingIndex;
 			    	 var name = $("#name").val();
 			    	 if(name==""){
-			    		 layer.msg("角色的名称不能为空,请输入", {time:1000, icon:5, shift:6}, function(){
-			    			 //alert("回调方法");
+			    		 layer.msg("权限名称不能为空,请输入", {time:1000, icon:5, shift:6}, function(){
+			    		 });
+			    		 return;
+			    	 }
+			    	 var url = $("#url").val();
+			    	 if(url==""){
+			    		 layer.msg("链接地址不能为空,请输入", {time:1000, icon:5, shift:6}, function(){
 			    		 });
 			    		 return;
 			    	 }
 			    	 $.ajax({
 			    		 type:"POST",
-			    		 url:"${APP_PATH}/role/insert",
+			    		 url:"${APP_PATH}/permission/insert",
 			    		 data:{
-			    			 "name":name
+			    			 "name":name,
+			    			 "url":url,
+			    			 "pid":"${param.pid}"
 			    		 },
 			    		 beforeSend:function(){//代表发送数据前怎么怎么做
 			    			 loadingIndex = layer.msg('数据处理中', {icon: 16});
 			    		 },
 			    		 success:function(result){
 			    			 layer.close(loadingIndex);
-			    			 if(result.success){
-			    				 layer.msg("角色信息保存成功", {time:1000, icon:6, shift:6}, function(){
-			    					 window.location.href="${APP_PATH}/role/index"
+			    			 
+			    			 if(result.success==true){
+			    				 layer.msg("权限信息保存成功", {time:1000, icon:6, shift:6}, function(){
+			    					 window.location.href="${APP_PATH}/permission/index"
 					    		 });
 			    			 }else{
-			    				 layer.msg("角色信息保存失败,请重新输入", {time:1000, icon:5, shift:6}, function(){
+			    				 layer.msg("权限信息保存失败,请重新输入", {time:1000, icon:5, shift:6}, function(){
 					    			 //alert("回调方法");
 					    		 });
 			    			 }

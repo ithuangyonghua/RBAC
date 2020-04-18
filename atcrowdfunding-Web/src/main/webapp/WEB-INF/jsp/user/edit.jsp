@@ -39,7 +39,7 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li><a href="${APP_PATH}/logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<ul style="padding-left:0px;" class="list-group">
+				<%-- <ul style="padding-left:0px;" class="list-group">
 					<li class="list-group-item tree-closed" >
 						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
 					</li>
@@ -74,7 +74,7 @@
 								<a href="${APP_PATH}/role/index"><i class="glyphicon glyphicon-certificate"></i> 角色维护</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
+								<a href="${APP_PATH}/permission/index"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
 							</li>
 						</ul>
 					</li>
@@ -121,7 +121,8 @@
 					<li class="list-group-item tree-closed" >
 						<a href="param.html"><i class="glyphicon glyphicon-list-alt"></i> 参数管理</a> 
 					</li>
-				</ul>
+				</ul> --%>
+				<%@include file="/WEB-INF/jsp/common/menue.jsp" %>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
