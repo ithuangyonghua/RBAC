@@ -33,4 +33,8 @@ public interface RoleDao {
 	@Select("select * from role")
 	List<Role> queryAll();
 
+	void doAssign(Map<String, Object> map);
+
+	void deleteAssign(Map<String, Object> map);
+
 }

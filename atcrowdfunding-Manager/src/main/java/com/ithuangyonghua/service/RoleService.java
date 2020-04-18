@@ -23,4 +23,8 @@ public interface RoleService {
 
 	List<Role> queryAll();
 
+	void doAssign(Map<String, Object> map);
+
+	
+
 }

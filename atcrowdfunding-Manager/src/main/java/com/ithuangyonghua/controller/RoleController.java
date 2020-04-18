@@ -45,7 +45,15 @@ public class RoleController {
 		model.addAttribute("roleInfo", role);
 		return "role/edit";
 	}
-
+	/**
+	 * 跳转到分配许可页面
+	 * @return
+	 */
+	@RequestMapping("/assign")
+	public String assign(Integer id) {
+		//roleService.queryAssignByRid(id);
+		return "role/assign";
+	}
 	/**
 	 * 查询
 	 * 
@@ -163,6 +171,24 @@ public class RoleController {
 			Map<String,Object> map = new HashMap();
 			map.put("roleids", id);
 			roleService.deleteRoleBouth(map);
+			ajaxResult.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ajaxResult.setSuccess(false);
+		}
+		return ajaxResult;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/doAssign")
+	public Object doAssign(Integer roleid,Integer [] permissionids) {
+		AjaxResult ajaxResult = new AjaxResult();
+		try {
+			Map<String,Object> map = new HashMap();
+			map.put("roleid", roleid);
+			map.put("permissionids", permissionids);
+			roleService.doAssign(map);
 			ajaxResult.setSuccess(true);
 		} catch (Exception e) {
 			e.printStackTrace();

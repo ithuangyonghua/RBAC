@@ -34,4 +34,11 @@ public interface UserDao {
 
 	void deleteBoathUser(Map<String,Object> map);
 
+	void insertAssign(Map<String, Object> map);
+
+	void deleteAssign(Map<String, Object> map);
+    
+	@Select("select rid from user_role where uid = #{id}")
+	List<Integer> assignRoleById(String id);
+
 }

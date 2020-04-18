@@ -32,6 +32,19 @@
 		update user set username=#{username},loginacct=#{loginacct},email=#{email}
 		where id=#{id}
 	</update>
+	
+	<insert id="insertAssign">
+	    insert into user_role(uid,rid) values
+	    <foreach collection="roleids" item="rid" separator=",">
+	     (#{uid},#{rid})
+	    </foreach>
+	</insert>
+	<delete id="deleteAssign">
+	    delete from user_role where  uid = #{uid} and rid in
+	    <foreach collection="roleids" open="(" close=")" separator="," item="rid">
+	      #{rid}
+	    </foreach>
+	</delete>
 </mapper>
    
     

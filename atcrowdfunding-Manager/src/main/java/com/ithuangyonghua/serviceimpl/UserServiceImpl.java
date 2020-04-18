@@ -55,4 +55,19 @@ public class UserServiceImpl implements UserService {
 	public void deleteBoathUser(Map<String,Object> map) {
 		userDao.deleteBoathUser(map);
 	}
+
+	public void insertAssign(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		userDao.insertAssign(map);
+	}
+
+	public void deleteAssign(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		userDao.deleteAssign(map);
+	}
+
+	public List<Integer> assignRoleById(String id) {
+		// TODO Auto-generated method stub
+		return userDao.assignRoleById(id);
+	}
 }

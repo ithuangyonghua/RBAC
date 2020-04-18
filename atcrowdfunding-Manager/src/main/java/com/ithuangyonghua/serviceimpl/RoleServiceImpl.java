@@ -52,4 +52,10 @@ public class RoleServiceImpl implements RoleService {
 		// TODO Auto-generated method stub
 		return roleDao.queryAll();
 	}
+
+	public void doAssign(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		roleDao.deleteAssign(map);
+		roleDao.doAssign(map);
+	}
 }

@@ -1,5 +1,6 @@
 package com.ithuangyonghua.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -234,8 +235,69 @@ public class UserController {
 		//
 		User user = userService.queryUserById(id);
 		model.addAttribute("userInfo", user);
-		List<Role> all = roleService.queryAll();
-		model.addAttribute("roleInfo", all);
+		List<Role> all = roleService.queryAll();//所有的角色
+//		model.addAttribute("roleInfo", all);
+
+		//已分配的集合
+		List<Role> assignList =new ArrayList<Role>();
+		//未分配的集合
+		List<Role> unassignList =new ArrayList<Role>();
+		
+		List<Integer> rids = userService.assignRoleById(id);
+		for(Role roleall:all){
+			if(rids.contains(roleall.getId())){//已分配
+				assignList.add(roleall);
+			}else{//未分配
+				unassignList.add(roleall);
+			}
+		}
+		model.addAttribute("assignList", assignList);
+		model.addAttribute("unassignList", unassignList);
 		return "user/assignRole";
+	}
+	
+	/**
+	 * 分配角色
+	 * @param id
+	 * @param unassignnames
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/doAssign")
+	public Object doAssign(Integer id,String [] unassignnames) {
+		AjaxResult ajaxResult = new AjaxResult();
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("uid", id);
+			map.put("roleids", unassignnames);
+			userService.insertAssign(map);
+			ajaxResult.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ajaxResult.setSuccess(false);
+		}
+		return ajaxResult;
+	}
+	/**
+	 * 取消分配角色
+	 * @param id
+	 * @param assignnames
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/doUnAssign")
+	public Object doUnAssign(Integer id,String [] assignnames) {
+		AjaxResult ajaxResult = new AjaxResult();
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("uid", id);
+			map.put("roleids", assignnames);
+			userService.deleteAssign(map);
+			ajaxResult.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ajaxResult.setSuccess(false);
+		}
+		return ajaxResult;
 	}
 }

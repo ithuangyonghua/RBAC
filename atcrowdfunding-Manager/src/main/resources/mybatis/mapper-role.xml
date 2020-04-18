@@ -26,4 +26,15 @@
          #{roleid}
       </foreach>
    </delete>
+   
+   <insert id="doAssign">
+       insert into role_permission(rid,pid) values
+       <foreach collection="permissionids"  separator="," item="permissionid">
+         (#{roleid},#{permissionid})
+       </foreach>
+   </insert>
+   
+   <delete id="deleteAssign">
+      delete from role_permission where rid = #{roleid}
+   </delete>
 </mapper>

@@ -25,4 +25,10 @@ public interface UserService {
 
 	void deleteBoathUser(Map<String,Object> map);
 
+	void insertAssign(Map<String, Object> map);
+
+	void deleteAssign(Map<String, Object> map);
+
+	List<Integer> assignRoleById(String id);
+
 }
